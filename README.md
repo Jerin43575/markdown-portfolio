@@ -11,3 +11,25 @@ I'm the GitHub Learning Lab bot and I'm here to help guide you in your journey t
 I'll meet you over there, can't wait to get started!
 
 This repository is licensed under [MIT](../LICENSE) (c) 2019 GitHub, Inc.
+
+
+package com.expeed.crm.common.services;
+
+import jakarta.inject.Singleton;
+import org.modelmapper.ModelMapper;
+
+import java.util.List;
+
+@Singleton
+public class ModelDTOConvertorService {
+    public ModelDTOConvertorService() {
+    }
+    public <S, D> D genericConvert(S source, Class<D> destinationClass) {
+        return new ModelMapper().map(source, destinationClass);
+    }
+
+    public <S, D> List<D> genericListConvert(List<S> sourceList, Class<D> destinationClass) {
+        return sourceList.stream().map(entity -> genericConvert(entity,
+                destinationClass)).toList();
+    }
+}
